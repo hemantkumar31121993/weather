@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>IITK Weather</title>
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo-div">
+                <img id="logo" src="/static/logo.svg">
+            </div>
+            <!-- <div id="user-div">
+                <img id="uesr-image" src="userimage.png">
+            </div> -->
+        </div>
+        <div id="content">
+            <div id="city-select-div">
+                <select id="city">
+                    <option value="0">Select City</option>
+                    <option value="1">Kanpur</option>
+                    <option value="2">Delhi</option>
+                    <option value="3">Thiruvanthpuram</option>
+                </select>
+                <button id="today" onclick="moveto">See Weather</button>
+                <!-- <button id="forecast">See Forecast</button> -->
+            </div>
+            <div id="weather-info-div">
+                <div id="city-name"><%= city %>, <%= state %></div>
+                <div id="weather-info">
+                    <div class="card">
+                        <div class="card-head">Maximum</div>
+                        <div class="card-data">
+                            <div id="maximum" class="large-text"><%= maximum %></div>
+                            <div class="unit">&deg;C</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-head">Minimum</div>
+                        <div class="card-data">
+                            <div id="minimum" class="large-text"><%= minimum %>></div>
+                            <div class="unit">&deg;C</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-head">Humidity</div>
+                        <div class="card-data">
+                            <div id="humidity" class="large-text"><%= humidity %></div>
+                            <div class="unit">%</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-head">Wind</div>
+                        <div class="card-data">
+                            <div id="minimum" class="large-text"><%= wind %></div>
+                            <div class="unit">km/h</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-head">Pressure</div>
+                        <div class="card-data">
+                            <div id="pressure" class="large-text"><%= pressure %></div>
+                            <div class="unit">hPa</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-head">Sunny</div>
+                        <div class="card-data">
+                            <div id="type" class="image-80"><img src="/static/<%= type %>.svg"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <div id="weather-forecast-div">
+                Forecast
+                <div id="weather-forecast">
+                    <% forecast.forEach(function (day) { %>
+                    <div class="card">
+                        <div class="card-head"><%= day.month %> <%= day.date %></div>
+                        <div class="card-data">
+                            <div class="medium-text"><%= day.maximum %></div>
+                            <div class="unit">&deg;C</div>
+                        </div>
+                        <div class="card-data">
+                            <div class="medium-text"><%= day.minium %></div>
+                            <div class="unit">&deg;C</div>
+                        </div>
+                    </div>
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+
+        </div>
+    </body>
+    <script>
+        var moveto = function() {
+            let city = parseInt(document.getElementById("city").value);
+            if(city > 0) {
+                window.location = "/"+city;
+            }
+        }
+    </script>
+</html>

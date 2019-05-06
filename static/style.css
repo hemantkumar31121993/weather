@@ -1,0 +1,95 @@
+html, body {
+    margin:0px 0px;
+    padding: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#header, #content, #footer {
+    width: 80%;
+    margin: auto auto;
+}
+
+.clearfix {
+    clear:both;
+}
+
+/* header */
+
+#header {
+    height: 100px;
+    padding: 20px;
+}
+
+#logo-div {
+    float:left;
+}
+
+#logo {
+    height: 80px;
+}
+
+#user-div {
+    float:right;
+}
+
+#user-image {
+    height: 80px;
+}
+
+/* content */
+
+#city-select-div {
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 20px;
+}
+
+#weather-info-div,
+#weather-forecast-div {
+    width:80%;
+    margin:auto auto;
+    padding: 40px;
+}
+
+#city-name {
+    font-size:30px;
+}
+
+#weather-info,
+#weather-forecast {
+    padding: 40px;
+}
+
+.large-text {
+    font-size:80px;
+}
+
+.medium-text {
+    font-size:60px;
+}
+
+.image-80 > img {
+    height:80px;
+}
+
+/* card */
+.card {
+    /* height: 100px; */
+    /* width: 120px; */
+    /* border: 1px dashed #666; */
+    float: left;
+    margin: 10px 30px;
+}
+
+.card-head {
+    color:#666;
+}
+
+.card-data > div {
+    float:left;
+    margin-top: 0px;
+}
+
+.card-data > div.unit {
+    margin-top:10px;
+}
