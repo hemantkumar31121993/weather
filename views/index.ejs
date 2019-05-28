@@ -21,7 +21,7 @@
                     <option value="2">Delhi</option>
                     <option value="3">Thiruvanthpuram</option>
                 </select>
-                <button id="today" onclick="moveto">See Weather</button>
+                <button id="today" onclick="moveto()">See Weather</button>
                 <!-- <button id="forecast">See Forecast</button> -->
             </div>
             <div id="weather-info-div">
@@ -37,7 +37,7 @@
                     <div class="card">
                         <div class="card-head">Minimum</div>
                         <div class="card-data">
-                            <div id="minimum" class="large-text"><%= minimum %>></div>
+                            <div id="minimum" class="large-text"><%= minimum %></div>
                             <div class="unit">&deg;C</div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-head">Sunny</div>
+                        <div class="card-head">Type</div>
                         <div class="card-data">
                             <div id="type" class="image-80"><img src="/static/<%= type %>.svg"></div>
                         </div>
@@ -99,7 +99,7 @@
         var moveto = function() {
             let city = parseInt(document.getElementById("city").value);
             if(city > 0) {
-                window.location = "/"+city;
+                window.location = "/city/"+city;
             }
         }
     </script>

@@ -1,64 +1,62 @@
 var express = require('express');
-var passport = require('passport');
-var localStrat = require('passport-local').Strategy;
-var session = require("express-session"),
-    bodyParser = require("body-parser");
+var bodyParser = require("body-parser");
 var app = express();
 
-var DB = require('mysql').createConnection({
-	host: "localhost",
-	user: "root",
-	password: "duleshwari",
-	database: "weather"
-});
-
-DB.connect(function(err) {
-	if(err)
-		throw err;
-	console.log("DB connected");
-});
-
-app.use(express.static("static"));
-app.use(session({ secret: "cats", resave:true, saveUninitialized:true }));
+app.use("/static", express.static("static"));
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.set('view engine', 'ejs');
 
-passport.use('local', new localStrat(
-	{passReqToCallback : true},
-	function(req, username, password, done) {
-		console.log(username, password);
-		console.log(req.session);
-		if(req.session.passport && req.session.passport.user) {
-			console.log("shortcircuit")
-			return done(null, {u:username});
-		}
-		if(username == "hemant" && password == "kumar") {
-			return done(null, {u:username});
-		}
-		return done(null, false, { message: 'Incorrect password.' });
-	}
-));
-
-passport.serializeUser(function(user, done) {
-  done(null, user.u);
-});
-
-passport.deserializeUser(function(id, done) {
-  done(null, {u:id})
-});
-
 app.listen(3000, "0.0.0.0", function () {
-	console.log("server running on port 3000");
-})
+    console.log("Running the server on port 3000");	
+});
 
-app.get("/:id", function(req, res) {
-	var p = new Date();
-	var date = p.getFullYear()+"-"+(p.getMonth()+1)+"-"+p.getDate();
-	var query = "select * from data where id=" + req.param.id + " and date=" + date;
-	DB.query(query, function(err, result, fields) {
+app.get("/", function(req, res) {
+	res.redirect("/city/1");
+});
 
-	});
-})
+cities = [
+            {name: "Kanpur", state: "Uttar Pradesh"},
+            {name: "New Delhi", state: "Delhi"},
+            {name: "Thiruvanthapuram", state: "Kerala"}
+        ];
+
+weather = [
+        {maximum:43,minimum:38,humidity:7,wind:17.1, pressure:1008, type:1},
+        {maximum:47,minimum:40,humidity:6,wind:15.1, pressure:1009, type:2},
+        {maximum:35,minimum:32,humidity:15,wind:10.2, pressure:1020, type:1}
+        ];
+
+app.get("/city/:id", function(req, res) {
+	let id = parseInt(req.params.id);
+
+    if(id >= 1 && id <=3  ) {
+        r = weather[id-1];
+		res.render("index", { city: cities[id-1].name, state: cities[id-1].state, maximum:r.maximum, minimum:r.minimum, humidity:r.humidity, wind:r.wind, pressure:r.pressure, type:r.type, forecast:[]});
+    } else {
+		res.render("index", { city: "NoCity", state: "NoState", maximum: "NA", minimum: "NA", humidity: "NA", wind: "NA", pressure: "NA", type: "1", forecast: []});
+    }
+});
+
+/*
+
+app.get("/login", function(req, res) {
+	if(req.isAuthenticated()) {
+		res.redirect("/admin");
+	} else {
+		res.render("login.ejs");
+	}
+});
+
+
+app.post("/login", passport.authenticate('local', {successRedirect: "/admin", failureRedirect: "/login"}));
+
+app.get("/admin", isauth, function (req, res) {
+	res.send("admin login");
+});
+
+app.get("/logout", function (req, res) {
+	req.logout();
+	res.redirect("/");
+});
+*/
